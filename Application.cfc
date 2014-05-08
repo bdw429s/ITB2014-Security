@@ -1,6 +1,11 @@
-component output="false"
-{
-	
+/**
+********************************************************************************
+Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
+www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+*/
+component{
+	// Application properties
 	this.name = "Website_" & cgi.server_name;
  	this.applicationTimeout = createTimeSpan(0,1,0,0);
     this.clientmanagement= "yes";
@@ -10,78 +15,58 @@ component output="false"
     this.setClientCookies = "yes";
     this.setDomainCookies = "no";
     this.datasource = "whoswho";
-       
-	/**
-	 * @hint The application first starts: the first request for a page is processed or the first CFC method is invoked by an event gateway instance, or a web services or Flash Remoting CFC.
-	 */
+	
+	// Mappings Imports
+	import coldbox.system.*;
+	
+	// COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP
+	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath(getCurrentTemplatePath());
+	// The web server mapping to this application. Used for remote purposes or static purposes
+	COLDBOX_APP_MAPPING   = "";
+	// COLDBOX PROPERTIES
+	COLDBOX_CONFIG_FILE 	 = "";
+	// COLDBOX APPLICATION KEY OVERRIDE
+	COLDBOX_APP_KEY 		 = "";
+
+	// application start
 	public boolean function onApplicationStart(){
+		application.cbBootstrap = new Coldbox(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY);
+		application.cbBootstrap.loadColdbox();
 		return true;
 	}
 
-	/**
-	 * @hint The application ends: the application times out, or the server is stopped
-	 */
-	public void function onApplicationEnd(ApplicationScope){
-
-	}
-
-	/**
-	 * @hint A request starts
-	 */
+	// request start
 	public boolean function onRequestStart(String targetPage){
 
+		// Bootstrap Reinit
+		if( not structKeyExists(application,"cbBootstrap") or application.cbBootStrap.isfwReinit() ){
+			lock name="coldbox.bootstrap_#this.name#" type="exclusive" timeout="5" throwonTimeout=true{
+				structDelete(application,"cbBootStrap");
+				application.cbBootstrap = new ColdBox(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY,COLDBOX_APP_MAPPING);
+			}
+		}
+
+		// ColdBox Reload Checks
+		application.cbBootStrap.reloadChecks();
+
+		//Process a ColdBox request only
+		if( findNoCase('index.cfm',listLast(arguments.targetPage,"/")) ){
+			application.cbBootStrap.processColdBoxRequest();
+		}
+
 		return true;
 	}
 
-	/**
-	 * @hint All pages in the request have been processed:
-	 */
-	public void function onRequestEnd(String targetPage){
-
-	}
-
-	/**
-	 * @hint A session starts
-	 */
 	public void function onSessionStart(){
-
+		application.cbBootStrap.onSessionStart();
 	}
 
-	/**
-	 * @hint A session ends
-	 */
-	public void function onSessionEnd(SessionScope,ApplicationScope){
-
+	public void function onSessionEnd(struct sessionScope, struct appScope){
+		arguments.appScope.cbBootStrap.onSessionEnd(argumentCollection=arguments);
 	}
 
-	/**
-	 * @hint ColdFusion received a request for a non-existent page.
-	 */
-	/*public boolean function onMissingTemplate(String targetPage) {
-
-		return true;
-	}*/
-
-	/**
-	 * @hint An exception that is not caught by a try/catch block occurs.
-	 */
-	/*public void function onError(Exception,EventName) {
-
-	}*/
-
-	/**
-	 * @hint Handles missing method exceptions
-	 */
-	public void function onMissingMethod(String method,Struct args) {
-
+	public boolean function onMissingTemplate(template){
+		return application.cbBootstrap.onMissingTemplate(argumentCollection=arguments);
 	}
-
-	/**
-	 * @hint HTTP or AMF calls are made to an application.
-	 */
-	/*public void function onCFCRequest(String cfcname,String method,Struct args){
-
-	}*/
-
 	
 }
