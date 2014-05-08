@@ -1,3 +1,4 @@
+<cfoutput>
 <h1>My Account</h1>
 
 <a href="#event.buildLink( linkTo='main.profile', queryString='userid=#session.user.id#' )#">View my Profile</a>

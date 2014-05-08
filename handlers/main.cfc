@@ -1,11 +1,14 @@
 component {
 	
-	function index( event, rc, prc ) {
-		if ( ! structKeyExists(session, "user") ) {
-			setNextEvent( 'main.login' );		
-		}	
-		
-		
+	// executes before any action
+	function preHandler( event, action, eventArguments ){
+		var publicActions = 'act_register,login,act_login,logout';
+		if( !listFindNoCase( publicActions, action ) && !structKeyExists(session, "user") ) {
+			setNextEvent( 'main.login' );			
+		}
+	}
+	
+	function index( event, rc, prc ) {		
 		var statusService = new services.statusService();
 		prc.qStatuses = statusService.getStatuses(); //no user id gets all statuses, a user id gets just that user
 		
@@ -35,11 +38,7 @@ component {
 
 	}
 	
-	function act_status_insert( event, rc, prc ) {
-		if ( ! structKeyExists(session, "user") ) {
-			setNextEvent( 'main.login' );		
-		}	
-	
+	function act_status_insert( event, rc, prc ) {	
 		var statusService = new services.statusService();	
 	
 		var saveResult = statusService.insert( session.user.id, rc );
@@ -80,19 +79,11 @@ component {
 	}
 	
 	function members( event, rc, prc ) {
-		if ( ! structKeyExists(session, "user") ) {
-			setNextEvent( 'main.login' );
-		}	
-		
 		var userService = new services.userService();
 		prc.qMembers = userService.getUsersWithStatus();
 	}
 	
 	function profile( event, rc, prc ) {
-		if ( ! structKeyExists(session, "user") ) {
-			location(url="dsp_login.cfm",addtoken="false");		
-		}	
-		
 		var userService = new services.userService(); 
 		prc.qUser = userService.getUser(rc.userid);
 		
@@ -102,10 +93,6 @@ component {
 	}
 	
 	function myaccount( event, rc, prc ) {
-		if ( ! structKeyExists(session, "user") ) {
-			setNextEvent( 'main.login' );		
-		}	
-		
 		var statusService = new services.statusService();
 		prc.qStatuses = statusService.getStatuses( userid = session.user.id );
 		
