@@ -3,7 +3,7 @@
 	<h2>For some people, small, beautiful events are what life is all about!</h2>
 	<h3>Share yours</h3>
 	
-	<form method="post" action="act_status_insert.cfm">
+	<form method="post" action="#event.buildLink( 'main.act_status_insert' )#">
 		<textarea name="message" class="status"></textarea>
 		
 		<input type="submit" name="btn_share" value="Share" class="btn btn-primary">
