@@ -1,3 +1,4 @@
+<cfheader name="X-XSS-Protection" value="0">
 <cfoutput>
 	<!DOCTYPE html>
 	<html lang="en">

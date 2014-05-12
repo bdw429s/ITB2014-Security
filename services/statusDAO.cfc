@@ -5,7 +5,7 @@
 	</cffunction>
 	
 	<cffunction name="getStatuses" returntype="query">
-		<cfargument name="userid" required="false" type="numeric" default="-1">
+		<cfargument name="userid" required="false" default="-1">
 		
 		<cfset var q = "">
 		
@@ -31,6 +31,25 @@
 		
 		<cfreturn q>
 		
+	</cffunction>
+
+	<cffunction name="getStatus" returntype="query">
+		<cfargument name="id">
+		<cfset var q = "">
+		<cfquery name="q">
+			select 
+			statuses.userid
+			,statuses.message
+			,statuses.createdat
+			,users.urlid
+			,users.firstName
+			,users.lastName
+			,users.photo
+			from statuses
+			inner join users on statuses.userid = users.id
+			WHERE statuses.id = #arguments.id#
+		</cfquery>
+		<cfreturn q>
 	</cffunction>
 	
 	<cffunction name="insertStatus" returntype="numeric">

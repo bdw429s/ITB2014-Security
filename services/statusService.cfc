@@ -13,6 +13,10 @@ component displayname="Status Service" hint="I look after the Statuses Business 
 			
 	}
 	
+	public query function getStatus (id=0) {
+		var statusDAO = new services.statusDAO();
+		return statusDAO.getStatus( id=arguments.id );
+	}
 	
 	public struct function insert( userid, formstruct ) {
 		var result = {};

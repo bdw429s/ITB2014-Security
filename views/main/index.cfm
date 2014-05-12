@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<h2>For some people, small, beautiful events are what life is all about!</h2>
+	<h2><cfinclude template="quotes/#prc.randomQuote#"></h2>
 	<h3>Share yours</h3>
 	
 	<form method="post" action="#event.buildLink( 'main.act_status_insert' )#">
@@ -19,7 +19,9 @@
 				<div class="status_message">
 					#prc.qStatuses.message#
 				</div>	
-				<div class="status_author">Shared by <a href="#event.buildLink( linkTo='main.profile', queryString='userid=#prc.qStatuses.userid#' )#">#prc.qStatuses.firstName# #prc.qStatuses.lastName#</a> at #timeformat( prc.qStatuses.createdat, "hh:mm tt")# on #dateformat( prc.qStatuses.createdat, "mm/dd/yyyy")#</div>
+				<div class="status_author">Shared by <a href="#event.buildLink( linkTo='main.profile', queryString='userid=#prc.qStatuses.userid#' )#">#prc.qStatuses.firstName# #prc.qStatuses.lastName#</a> at 
+					<a href="#event.buildLink(linkTo='main.status', queryString="id=#prc.qStatuses.statusid#")#">
+					#timeformat( prc.qStatuses.createdat, "hh:mm tt")# on #dateformat( prc.qStatuses.createdat, "mm/dd/yyyy")#</a></div>
 			</div> 
 		</div>
 	</cfloop>	

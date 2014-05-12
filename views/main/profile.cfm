@@ -1,5 +1,5 @@
 <cfoutput>
-
+	<h2><cfinclude template="quotes/#prc.randomQuote#"></h2>
 	<div class="profile_holder">
 		<div class="profile_fullsize">
 			<img src="/img/profiles/#prc.qUser.photo#" border="0" alt="#prc.qUser.firstName# #prc.qUser.lastName#'s Profile Photo">
@@ -9,6 +9,13 @@
 			
 			<div><b>Email:</b> #prc.qUser.email#</div>
 			
+			<cfif prc.qUser.id EQ session.user.id>
+				<form action="#event.buildLink( 'main.update_photo' )#" enctype="multipart/form-data" method="POST">
+					<input type="file" name="photo" />
+					<input type="submit" value="Update Photo" />	
+				</form>
+			</cfif>
+
 			<div>&nbsp;</div>
 			<div><b>Registered:</b> #timeformat( prc.qUser.createdat, "hh:mm tt")# on #dateformat( prc.qUser.createdat, "mm/dd/yyyy")#</div>
 		

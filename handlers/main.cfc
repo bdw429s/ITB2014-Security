@@ -11,7 +11,7 @@ component {
 	function index( event, rc, prc ) {		
 		var statusService = new services.statusService();
 		prc.qStatuses = statusService.getStatuses(); //no user id gets all statuses, a user id gets just that user
-		
+		prc.randomQuote = RandRange(1,2) & ".cfm";
 	}
 	
 	function act_register( event, rc, prc ) {
@@ -89,7 +89,7 @@ component {
 		
 		var statusService = new services.statusService();
 		prc.qStatuses = statusService.getStatuses( userid=rc.userid );
-	
+		prc.randomQuote = RandRange(1,2) & ".cfm";
 	}
 	
 	function myaccount( event, rc, prc ) {
@@ -97,7 +97,26 @@ component {
 		prc.qStatuses = statusService.getStatuses( userid = session.user.id );
 		
 	}
+
+	function update_photo ( event, rc, prc ) {
+		var userService = new services.userService(); 
+		if (userService.updatePhoto( userid=session.user.id, formField="photo" )) {
+			session.flash = {};	
+			session.flash.code = 1;
+			session.flash.message = "Photo Updated";
+		} else {
+			session.flash = {};	
+			session.flash.code = 0;
+			session.flash.message = "Sorry unable to upload photo.";
+		}
+		setNextEvent( 'main.index' );
+	}
 	
+	function status ( event, rc, prc ) {
+		var statusService = new services.statusService();
+		prc.qStatus = statusService.getStatus( id = rc.id );
+	}
+
 	function logout( event, rc, prc ) {	
 		try {
 			structdelete(session, "user");

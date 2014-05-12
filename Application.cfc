@@ -15,6 +15,7 @@ component{
     this.setClientCookies = "yes";
     this.setDomainCookies = "no";
     this.datasource = "whoswho";
+    this.scriptProtect = "none";
 	
 	// Mappings Imports
 	import coldbox.system.*;

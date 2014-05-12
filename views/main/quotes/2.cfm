@@ -1,0 +1,1 @@
+For some people, small, beautiful events are what life is all about!

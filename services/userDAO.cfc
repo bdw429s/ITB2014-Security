@@ -107,5 +107,34 @@
 		<cfreturn q.generatedkey>
 		
 	</cffunction>	
+
+	<cffunction name="updatePhoto" returntype="boolean">
+		<cfargument name="userid" type="numeric">
+		<cfargument name="formField" type="string">
+		<cfset var uploadDir = ReReplace(getDirectoryFromPath(getCurrentTemplatePath()), "services[/\\]$", "img/profiles/")>
+		<cftry>
+				<cffile action="upload"
+					accept="image/gif,image/jpeg,image/png,image/jpg"
+					filefield="#arguments.formField#"
+					destination="#uploadDir#"
+					nameconflict="overwrite"
+					strict="false">
+				<!---
+				<cfif NOT ListFindNoCase("gif,jpg,png", cffile.ServerFileExt)>
+					<cffile action="delete" file="#cffile.ServerDirectory#/#cffile.ServerFile#">	
+				</cfif>
+				--->
+				<cfquery>
+					UPDATE users
+					SET photo = <cfqueryparam value="#cffile.ServerFile#">
+					WHERE id = <cfqueryparam value="#arguments.userid#" cfsqltype="cf_sql_integer">
+				</cfquery>
+				<cfreturn true>
+			<cfcatch>
+				<cfrethrow>
+				<cfreturn false>
+			</cfcatch>
+		</cftry>
+	</cffunction>
 	
 </cfcomponent>

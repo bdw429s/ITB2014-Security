@@ -79,6 +79,11 @@ component displayname="User Service" hint="I look after the User Business Logic"
 		
 		return user;
 	}
+
+	public boolean function updatePhoto ( numeric userid, string formField ) {
+		var userDAO = new services.userDAO();
+		return userDAO.updatePhoto( userid=arguments.userid, formField=arguments.formField );
+	}
 	
 	
 }

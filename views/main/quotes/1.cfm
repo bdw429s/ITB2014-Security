@@ -1,0 +1,1 @@
+This is who I am, right here, right now, all right? All that counts is here and now, and this is me!

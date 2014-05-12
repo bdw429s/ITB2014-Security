@@ -1,0 +1,1 @@
+We’re all stories, in the end. Just make it a good one, eh?
