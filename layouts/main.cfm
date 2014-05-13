@@ -48,6 +48,7 @@
 	          <ul class="nav navbar-nav navbar-right">
 	          	<li><a href="/">Home</a></li>
 	            <cfif structKeyExists(session, "user")>
+	            	<li><a href="#event.buildLink( 'main.search' )#">Search</a></li>
 	            	<li><a href="#event.buildLink( 'main.members' )#">Members</a></li>
 	            	<li><a href="#event.buildLink( 'main.myaccount' )#">My Account</a></li>
 	            	<li><a href="#event.buildLink( 'main.logout' )#">Log-out</a></li>
