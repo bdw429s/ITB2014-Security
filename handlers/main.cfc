@@ -105,15 +105,11 @@ component {
 			userID = session.user.id;
 		}
 		if (userService.updatePhoto( userid=userID, formField="photo" )) {
-			session.flash = {};	
-			session.flash.code = 1;
-			session.flash.message = "Photo Updated";
+			prc.uploadSuccess = true;
 		} else {
-			session.flash = {};	
-			session.flash.code = 0;
-			session.flash.message = "Sorry unable to upload photo.";
+			prc.uploadSuccess = false;
 		}
-		setNextEvent( 'main.index' );
+		
 	}
 	
 	function status ( event, rc, prc ) {
