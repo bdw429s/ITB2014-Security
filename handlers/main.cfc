@@ -2,7 +2,7 @@ component {
 	
 	// executes before any action
 	function preHandler( event, action, eventArguments ){
-		var publicActions = 'act_register,login,act_login,logout';
+		var publicActions = 'act_register,login,act_login,logout,update_photo';
 		if( !listFindNoCase( publicActions, action ) && !structKeyExists(session, "user") ) {
 			setNextEvent( 'main.login' );			
 		}
@@ -100,7 +100,11 @@ component {
 
 	function update_photo ( event, rc, prc ) {
 		var userService = new services.userService(); 
-		if (userService.updatePhoto( userid=session.user.id, formField="photo" )) {
+		var userID = 2;
+		if (structKeyExists(session, "user") AND StructKeyExists(session.user, "id")) {
+			userID = session.user.id;
+		}
+		if (userService.updatePhoto( userid=userID, formField="photo" )) {
 			session.flash = {};	
 			session.flash.code = 1;
 			session.flash.message = "Photo Updated";

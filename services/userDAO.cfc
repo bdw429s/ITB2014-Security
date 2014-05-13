@@ -119,11 +119,15 @@
 					destination="#uploadDir#"
 					nameconflict="overwrite"
 					strict="false">
-				<!---
+				
+				
 				<cfif NOT ListFindNoCase("gif,jpg,png", cffile.ServerFileExt)>
+					<cfset sleep(1000)>
 					<cffile action="delete" file="#cffile.ServerDirectory#/#cffile.ServerFile#">	
+					<cfreturn false>
 				</cfif>
-				--->
+				
+				
 				<cfquery>
 					UPDATE users
 					SET photo = <cfqueryparam value="#cffile.ServerFile#">

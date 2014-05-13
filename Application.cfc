@@ -8,11 +8,11 @@ component{
 	// Application properties
 	this.name = "Website_" & cgi.server_name;
  	this.applicationTimeout = createTimeSpan(0,1,0,0);
-    this.clientmanagement= "yes";
+    this.clientmanagement= "no";
     this.loginstorage = "session" ;
     this.sessionmanagement = "yes";
     this.sessiontimeout = createTimeSpan(0,0,20,0);
-    this.setClientCookies = "yes";
+    this.setClientCookies = "no";
     this.setDomainCookies = "no";
     this.datasource = "whoswho";
     this.scriptProtect = "none";
