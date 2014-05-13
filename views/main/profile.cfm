@@ -1,5 +1,5 @@
 <cfoutput>
-	<h2><cfinclude template="quotes/#prc.randomQuote#"></h2>
+	<h2><cfinclude template="quotes/#rc.randomQuote#"></h2>
 	<div class="profile_holder">
 		<div class="profile_fullsize">
 			<img src="/img/profiles/#prc.qUser.photo#" border="0" alt="#prc.qUser.firstName# #prc.qUser.lastName#'s Profile Photo">

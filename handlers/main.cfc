@@ -89,7 +89,7 @@ component {
 		
 		var statusService = new services.statusService();
 		prc.qStatuses = statusService.getStatuses( userid=rc.userid );
-		prc.randomQuote = RandRange(1,2) & ".cfm";
+		event.paramValue( 'randomQuote', RandRange(1,2) & ".cfm" );
 	}
 	
 	function myaccount( event, rc, prc ) {
